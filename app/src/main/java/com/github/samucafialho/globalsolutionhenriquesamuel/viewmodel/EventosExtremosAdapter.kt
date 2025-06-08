@@ -7,23 +7,22 @@ import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.github.samucafialho.globalsolutionhenriquesamuel.R
-import com.github.samucafialho.globalsolutionhenriquesamuel.data.EventoDAO
-import com.github.samucafialho.globalsolutionhenriquesamuel.model.ItemModel
+import com.github.samucafialho.globalsolutionhenriquesamuel.model.EventosExtremosModel
 
 
-    class ItemsAdapter(private val onItemRemoved: (ItemModel) -> Unit) :
-        RecyclerView.Adapter<ItemsAdapter.EventoViewHolder>() {
+    class EventosExtremosAdapter(private val onItemRemoved: (EventosExtremosModel) -> Unit) :
+        RecyclerView.Adapter<EventosExtremosAdapter.EventoViewHolder>() {
 
-        private var eventos = listOf<ItemModel>()
+        private var eventos = listOf<EventosExtremosModel>()
 
 
         inner class EventoViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
 
-            val textView = view.findViewById<TextView>(R.id.textViewItem)
+            val textView = view.findViewById<TextView>(R.id.textEvento)
             val excluir = view.findViewById<ImageButton>(R.id.imageButton)
 
-            fun bind(evento: ItemModel) {
+            fun bind(evento: EventosExtremosModel) {
                 textView.text ="Local: ${evento.local}, Tipo: ${evento.tipo}, Impacto: ${evento.impacto}," +
                         "Data: ${evento.data}, Afetados: ${evento.afetados}"
                 excluir.setOnClickListener {
@@ -34,7 +33,7 @@ import com.github.samucafialho.globalsolutionhenriquesamuel.model.ItemModel
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EventoViewHolder {
             val view = LayoutInflater.from(parent.context)
-                .inflate(R.layout.item_layout, parent, false)
+                .inflate(R.layout.eventoextremo_layout, parent, false)
             return EventoViewHolder(view)
         }
 
@@ -45,7 +44,7 @@ import com.github.samucafialho.globalsolutionhenriquesamuel.model.ItemModel
             holder.bind(item)
         }
 
-        fun updateItems(novosEventos: List<ItemModel>) {
+        fun updateItems(novosEventos: List<EventosExtremosModel>) {
             eventos = novosEventos
             notifyDataSetChanged()
         }

@@ -5,20 +5,20 @@ import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
-import com.github.samucafialho.globalsolutionhenriquesamuel.model.ItemModel
+import com.github.samucafialho.globalsolutionhenriquesamuel.model.EventosExtremosModel
 
 
 @Dao
 interface EventoDAO {
 
-    @Query("SELECT * FROM ItemModel")
-    fun getAll(): LiveData<List<ItemModel>>
+    @Query("SELECT * FROM EventosExtremosModel")
+    fun getAll(): LiveData<List<EventosExtremosModel>>
 
     @Insert
-    fun insert(evento: ItemModel)
+    fun insert(evento: EventosExtremosModel)
 
 
     @Delete
-    fun delete(evento: ItemModel)
+    fun delete(evento: EventosExtremosModel)
 
 }

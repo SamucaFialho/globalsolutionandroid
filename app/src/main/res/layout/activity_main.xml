@@ -23,9 +23,46 @@ android:id="@+id/editText"
 android:layout_width="match_parent"
 android:layout_height="wrap_content"
 android:layout_marginStart="16dp"
-android:layout_marginEnd="16dp"
-android:hint="Nome do produto"
+android:layout_marginEnd="12dp"
+android:hint="Nome do local do Evento Extremo"
 android:inputType="text"/>
+
+<EditText
+android:id="@+id/editTextTipo"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:layout_marginStart="16dp"
+android:layout_marginEnd="12dp"
+android:hint="Tipo do evento"
+android:inputType="text" />
+
+<EditText
+android:id="@+id/editTextImpacto"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:layout_marginStart="16dp"
+android:layout_marginEnd="12dp"
+android:hint="Impacto do Evento"
+android:inputType="text" />
+
+<EditText
+android:id="@+id/editTextAfetados"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:layout_marginStart="16dp"
+android:layout_marginEnd="12dp"
+android:hint="Quantidade de afetados"
+android:inputType="number" />
+
+<EditText
+android:id="@+id/editTextData"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:layout_marginStart="16dp"
+android:layout_marginEnd="12dp"
+android:hint="Data (dd/mm/aaaa)"
+android:inputType="date" />
+
 
 <Button
 android:id="@+id/button"
@@ -33,7 +70,9 @@ android:layout_width="match_parent"
 android:layout_height="wrap_content"
 android:layout_marginStart="16dp"
 android:layout_marginEnd="16dp"
-android:text="inserir" />
+android:text="inserir"
+android:backgroundTint="@color/purple_200"/>
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"

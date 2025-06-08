@@ -3,28 +3,19 @@ package com.github.samucafialho.globalsolutionhenriquesamuel
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
-import com.github.samucafialho.globalsolutionhenriquesamuel.ui.theme.GlobalSolutionHenriqueSamuelTheme
-import com.github.samucafialho.globalsolutionhenriquesamuel.viewmodel.ItemsAdapter
-import com.github.samucafialho.globalsolutionhenriquesamuel.viewmodel.ItemsViewModel
-import com.github.samucafialho.globalsolutionhenriquesamuel.viewmodel.ItemsViewModelFactory
+import com.github.samucafialho.globalsolutionhenriquesamuel.model.EventosExtremosModel
+import com.github.samucafialho.globalsolutionhenriquesamuel.viewmodel.EventosExtremosAdapter
+import com.github.samucafialho.globalsolutionhenriquesamuel.viewmodel.EventosExtremosViewModel
+import com.github.samucafialho.globalsolutionhenriquesamuel.viewmodel.EventosViewModelFactory
 
 class MainActivity : AppCompatActivity() {
 
 
-    private lateinit var viewModel: ItemsViewModel
+    private lateinit var viewModel: EventosExtremosViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,29 +25,64 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         supportActionBar?.title = "Lista de Eventos Extremos"
 
+
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
-        val itemsAdapter = ItemsAdapter { evento ->
+        val eventosExtremosAdapter = EventosExtremosAdapter { evento ->
             viewModel.removeItem(evento)
         }
-        recyclerView.adapter = itemsAdapter
+        recyclerView.adapter = eventosExtremosAdapter
+
 
         val button = findViewById<Button>(R.id.button)
         val editText = findViewById<EditText>(R.id.editText)
+        val editTipo = findViewById<EditText>(R.id.editTextTipo)
+        val editImpacto = findViewById<EditText>(R.id.editTextImpacto)
+        val editAfetados = findViewById<EditText>(R.id.editTextAfetados)
+        val editData = findViewById<EditText>(R.id.editTextData)
 
         button.setOnClickListener {
+            val nome = editText.text.toString()
+            val tipo = editTipo.text.toString()
+            val impacto = editImpacto.text.toString()
+            val data = editData.text.toString()
+            val afetados = editAfetados.text.toString().toIntOrNull() ?: 0
+
             if (editText.text.isEmpty()) {
-                editText.error = "Preencha um valor"
+                editText.error = "Preencha com um local"
+                return@setOnClickListener
+            }
+            if (editTipo.text.isEmpty()) {
+                editText.error = "Preencha com um tipo"
+                return@setOnClickListener
+            }
+            if (editImpacto.text.isEmpty()) {
+                editText.error = "Preencha com um impacto(leve, moderado ou severo"
+                return@setOnClickListener
+            }
+            if (editData.text.isEmpty()) {
+                editText.error = "Preencha com uma data válida"
+                return@setOnClickListener
+            }
+            if (editAfetados.text.isEmpty()) {
+                editText.error = "Preencha com o número aproximado de pessoas afetadas"
                 return@setOnClickListener
             }
 
-            viewModel.addEvento(editText.text.toString())
+            val evento = EventosExtremosModel(local = nome, tipo = tipo,
+                impacto = impacto, data = data, afetados = afetados)
+            viewModel.addEvento(evento)
             editText.text.clear()
+            editTipo.text.clear()
+            editImpacto.text.clear()
+            editData.text.clear()
+            editAfetados.text.clear()
         }
 
-        val viewModelFactory = ItemsViewModelFactory(application)
-        viewModel = ViewModelProvider(this, viewModelFactory).get(ItemsViewModel::class.java)
+        val viewModelFactory = EventosViewModelFactory(application)
+        viewModel = ViewModelProvider(this, viewModelFactory).get(EventosExtremosViewModel::class.java)
 
         viewModel.itemsLiveData.observe(this) { items ->
-            itemsAdapter.updateItems(items)
+            eventosExtremosAdapter.updateItems(items)
         }
     }
+}

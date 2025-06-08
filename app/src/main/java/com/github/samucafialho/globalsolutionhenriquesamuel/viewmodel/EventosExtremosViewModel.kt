@@ -6,35 +6,35 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
 import androidx.room.Room
 import com.github.samucafialho.globalsolutionhenriquesamuel.data.EventoDAO
-import com.github.samucafialho.globalsolutionhenriquesamuel.data.ItemDatabase
-import com.github.samucafialho.globalsolutionhenriquesamuel.model.ItemModel
+import com.github.samucafialho.globalsolutionhenriquesamuel.data.EventosDatabase
+import com.github.samucafialho.globalsolutionhenriquesamuel.model.EventosExtremosModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class ItemsViewModel(application: Application) : AndroidViewModel(application) {
+class EventosExtremosViewModel(application: Application) : AndroidViewModel(application) {
 
     private val EventoDAO: EventoDAO
-    val itemsLiveData: LiveData<List<ItemModel>>
+    val itemsLiveData: LiveData<List<EventosExtremosModel>>
 
     init {
         val database = Room.databaseBuilder(
             getApplication(),
-            ItemDatabase::class.java,
+            EventosDatabase::class.java,
             "EventosExtremos_database"
         ).build()
 
-        EventoDAO = database.itemDao()
+        EventoDAO = database.eventoDAO()
         itemsLiveData = EventoDAO.getAll()
     }
 
 
-    fun addEvento(evento: ItemModel) {
+    fun addEvento(evento: EventosExtremosModel) {
         viewModelScope.launch(Dispatchers.IO) {
             EventoDAO.insert(evento)
         }
     }
 
-    fun removeItem(evento: ItemModel) {
+    fun removeItem(evento: EventosExtremosModel) {
         viewModelScope.launch(Dispatchers.IO) {
             EventoDAO.delete(evento)
         }
